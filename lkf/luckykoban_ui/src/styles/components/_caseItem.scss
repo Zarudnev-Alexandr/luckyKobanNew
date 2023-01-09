@@ -1,0 +1,55 @@
+.case{
+  max-width: 240px;
+  //border: 1px solid #000;
+  border: 2px outset $text-color;
+  border-radius: 7px;
+  padding: 5px;
+  color: $text-color;
+  background-color: $bg-color;
+  margin: 0 auto;
+  &__img-box{
+    height: 228px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  &__img-link{
+    &:hover::after{
+      display: none;
+    }
+    &:hover{
+      transform: translateY(0);
+      transition: 0s;
+    }
+  }
+  &__content{
+    padding: 10px 0 0 10px;
+    height: 120px;
+    position: relative;
+  }
+  &__title-linkbox{
+    display: flex;
+    justify-content: center;
+  }
+  &__title-link{
+    margin-bottom: 16px;
+    font-size: 21px;
+    font-weight: bold;
+    text-align: center;
+  }
+  &__price-box{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 18px;
+  }
+  &__price-last{
+    color: #ADADAD;
+    text-decoration: line-through;
+  }
+  &__price-now{
+    margin-left: 10px;
+  }  
+}

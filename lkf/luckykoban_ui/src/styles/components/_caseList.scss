@@ -1,0 +1,8 @@
+.caseList{
+  &__inner{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-column-gap: 15px;
+    grid-row-gap: 50px;
+  }
+}
