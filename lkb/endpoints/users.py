@@ -29,7 +29,8 @@ async def get_current_user(db: Session = Depends(get_db), user_id: str = Depends
     return crud.get_user(db, user_id)
 
 
-@router.post('/reg', response_model=schemas.BaseResponse, description="Registration", tags=["Auth Methods"])
+@router.post('/reg', response_model=schemas.BaseResponse, description="Registration", tags=["Auth Methods"],
+             status_code=201)
 async def reg_user(response: Response, user_data: schemas.UserCreate, db: Session = Depends(get_db)):
     if not email_validate.validate(user_data.email, check_smtp=False):
         raise HTTPException(400, "invalid email")
