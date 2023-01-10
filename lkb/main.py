@@ -5,7 +5,7 @@ from endpoints import users, admin, items, buying
 from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
-app = FastAPI(docs_url="/api", redoc_url="/api/redoca", openapi_url="/api/openapi.json")
+app = FastAPI(docs_url="/api", redoc_url="/api/redoc", openapi_url="/api/openapi.json")
 
 app.add_middleware(
     CORSMiddleware,

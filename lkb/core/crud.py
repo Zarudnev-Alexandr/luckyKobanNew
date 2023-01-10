@@ -127,7 +127,10 @@ def sign_user(db: Session, user_data: schemas.UserCreate):
 
 
 def get_user(db: Session, user_id) -> schemas.UserInfo:
-    return db.query(models.Users).filter(models.Users.id == user_id).first()
+    user = db.query(models.Users).filter(models.Users.id == user_id).first()
+    if user is None:
+        raise HTTPException(404, "user not found")
+    return user
 
 
 def check_email(db: Session, email):
