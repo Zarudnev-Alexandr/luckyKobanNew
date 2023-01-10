@@ -5,12 +5,14 @@ import Layout from '../components/Layout';
 const Login = () => {
   const [authData, setAuthData] = useState({});
 
+  const [changeTab, setChangeTab] = useState('Логин');
+
   const authSetData = (e) => {
     e.preventDefault();
     setAuthData({ ...authData, [e.target.name]: e.target.value });
   };
 
-  const postAuth = async () => {
+  const postAuthReg = async () => {
     let response = await fetch(API_URL + 'user/reg', {
       method: 'POST',
       headers: {
@@ -22,25 +24,29 @@ const Login = () => {
       }),
     });
     let data = await response.json();
-    if (response.status === 201) {
-      alert('Топчик');
+    if (response.status === 200) {
+      alert('Регистрация прошла успешно');
     } else {
-      alert('Не 201(');
+      alert('Еблан, ты че ввел???');
     }
   };
 
-  const getMe = async () => {
-    let response = await fetch(API_URL + 'user/get_me', {
-      method: 'GET',
+  const postAuthLogin = async () => {
+    let response = await fetch(API_URL + 'user/login', {
+      method: 'POST',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        ...authData,
+      }),
     });
-
     let data = await response.json();
     if (response.status === 200) {
-      alert('vse ok');
+      alert('Успешный вход');
+    } else {
+      alert('Ну ты вдвойне еблан');
     }
   };
 
@@ -48,26 +54,73 @@ const Login = () => {
     <>
       <Layout title='Lucky Koban | Вход' content='Login page'></Layout>
       <div className='login'>
-        <form className='login__box' onSubmit={postAuth}>
-          <h1 className='login__title'>Логин</h1>
-          <input
-            className='login__email'
-            type='email'
-            name='email'
-            placeholder='Введите почту'
-            onChange={(e) => authSetData(e)}
-          />
-          <input
-            className='login__password'
-            type='password'
-            name='password'
-            placeholder='Введите пароль'
-            onChange={(e) => authSetData(e)}
-          />
-          <button className='login__btn btn' type='submit'>
-            Войти
-          </button>
-        </form>
+        <div className='login__changetab-box'>
+          <h1
+            className={
+              'login__title ' +
+              (changeTab === 'Логин' ? 'login__changetab--active' : '')
+            }
+            onClick={() => setChangeTab('Логин')}
+          >
+            Логин
+          </h1>
+          <h1
+            className={
+              'login__title login__register-title ' +
+              (changeTab === 'Регистрация' ? 'login__changetab--active' : '')
+            }
+            onClick={() => setChangeTab('Регистрация')}
+          >
+            Регистрация
+          </h1>
+        </div>
+        {changeTab === 'Логин' ? (
+          <form className='login__box'>
+            <input
+              className='login__email'
+              type='email'
+              name='email'
+              placeholder='Введите почту'
+              onChange={(e) => authSetData(e)}
+            />
+            <input
+              className='login__password'
+              type='password'
+              name='password'
+              placeholder='Введите пароль'
+              onChange={(e) => authSetData(e)}
+            />
+            <input
+              className='login__btn btn'
+              value='Войти'
+              type='button'
+              onClick={postAuthLogin}
+            />
+          </form>
+        ) : (
+          <form className='login__box'>
+            <input
+              className='login__email'
+              type='email'
+              name='email'
+              placeholder='Введите почту'
+              onChange={(e) => authSetData(e)}
+            />
+            <input
+              className='login__password'
+              type='password'
+              name='password'
+              placeholder='Введите пароль'
+              onChange={(e) => authSetData(e)}
+            />
+            <input
+              className='login__btn btn'
+              value='Зарегистрироваться'
+              type='button'
+              onClick={postAuthReg}
+            />
+          </form>
+        )}
       </div>
     </>
   );
