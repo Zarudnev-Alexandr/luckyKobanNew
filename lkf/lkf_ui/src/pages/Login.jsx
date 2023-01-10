@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useForm } from 'react';
 import { API_URL } from '../config/config';
 import Layout from '../components/Layout';
 
@@ -6,11 +6,12 @@ const Login = () => {
   const [authData, setAuthData] = useState({});
 
   const authSetData = (e) => {
+    e.preventDefault();
     setAuthData({ ...authData, [e.target.name]: e.target.value });
   };
 
   const postAuth = async () => {
-    let response = await fetch(API_URL + 'user/login', {
+    let response = await fetch(API_URL + 'user/reg', {
       method: 'POST',
       headers: {
         accept: 'application/json',
@@ -45,15 +46,6 @@ const Login = () => {
 
   return (
     <>
-      {/* <form onSubmit={postAuth}>
-        <input type='email' name='email' onChange={(e) => authSetData(e)} />
-        <input
-          type='password'
-          name='password'
-          onChange={(e) => authSetData(e)}
-        />
-        <input type='submit' onClick={getMe} />
-      </form> */}
       <Layout title='Lucky Koban | Вход' content='Login page'></Layout>
       <div className='login'>
         <form className='login__box' onSubmit={postAuth}>
@@ -72,7 +64,7 @@ const Login = () => {
             placeholder='Введите пароль'
             onChange={(e) => authSetData(e)}
           />
-          <button className='login__btn btn' type='submit' onClick={getMe}>
+          <button className='login__btn btn' type='submit'>
             Войти
           </button>
         </form>
