@@ -1,0 +1,28 @@
+
+.container{
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+body{
+  color: #fff;
+  background: linear-gradient(171deg,$bg-color1,
+    $bg-color2) no-repeat;
+  background: linear-gradient(171deg, $bg-color1, $bg-color2) no-repeat;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+a{
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  &:hover{
+    color: $accent-color;
+    transition: all .3s;
+  }
+}
+

@@ -132,3 +132,5 @@ dmypy.json
 /lucky-koban.ru.key
 /core/my_session.session
 images/
+.idea/
+lkb/.idea/

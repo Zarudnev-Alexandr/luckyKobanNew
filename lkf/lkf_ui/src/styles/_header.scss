@@ -1,0 +1,22 @@
+.header{
+  &__inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+  }
+  &__logo-box{
+    max-width: 90px;
+  }
+  &__links-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__links-list__item{
+    margin: 0 10px;
+  }
+  &__auth-link{
+    font-size: 20px;
+  }
+}
