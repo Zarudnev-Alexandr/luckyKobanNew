@@ -9,7 +9,10 @@ app = FastAPI(docs_url="/api", redoc_url="/api/redoca", openapi_url="/api/openap
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"]
+    allow_origins=["*"],
+    allow_methods=['POST', 'GET'],
+    allow_credentials=True,
+    allow_headers=["*"],
 )
 
 app.include_router(users.router, prefix="/api/user")

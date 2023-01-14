@@ -1,16 +1,29 @@
-import React, { useState, useForm } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
+import { useForm } from 'react-hook-form';
 import { API_URL } from '../config/config';
 import Layout from '../components/Layout';
+import Cookies from 'js-cookie';
+import AuthContext from '../context/context';
 
 const Login = () => {
+  //let { LoginUser } = useContext(AuthContext);
   const [authData, setAuthData] = useState({});
 
   const [changeTab, setChangeTab] = useState('Логин');
+
+  const { handleSubmit, reset } = useForm({ mode: 'onblur' });
 
   const authSetData = (e) => {
     e.preventDefault();
     setAuthData({ ...authData, [e.target.name]: e.target.value });
   };
+
+  // const postAuthLogin = () => {
+  //   const login = authData.login;
+  //   const password = authData.password;
+  //   LoginUser(login, password);
+  //   reset();
+  // };
 
   const postAuthReg = async () => {
     let response = await fetch(API_URL + 'user/reg', {
@@ -27,7 +40,7 @@ const Login = () => {
     if (response.status === 200) {
       alert('Регистрация прошла успешно');
     } else {
-      alert('Еблан, ты че ввел???');
+      alert('Читать умеешь, ммм?');
     }
   };
 
@@ -38,6 +51,7 @@ const Login = () => {
         accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({
         ...authData,
       }),
@@ -46,7 +60,7 @@ const Login = () => {
     if (response.status === 200) {
       alert('Успешный вход');
     } else {
-      alert('Ну ты вдвойне еблан');
+      alert('Вышел и зашел обратно');
     }
   };
 
