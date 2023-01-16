@@ -37,14 +37,19 @@ const Header = () => {
             </div>
             <div className='header__auth-box'>
               {token ? (
-                <NavLink
-                  className='header__auth-link'
-                  onClick={() => (
-                    setToken(null), localStorage.setItem('token', null)
-                  )}
-                >
-                  Выход
-                </NavLink>
+                <>
+                  <NavLink className='header__auth-link' to='/lk'>
+                    Личный кабинет
+                  </NavLink>
+                  <NavLink
+                    className='header__auth-link'
+                    onClick={() => (
+                      setToken(null), localStorage.setItem('token', null)
+                    )}
+                  >
+                    Выход
+                  </NavLink>
+                </>
               ) : (
                 <NavLink to='/login' className='header__auth-link'>
                   Вход
