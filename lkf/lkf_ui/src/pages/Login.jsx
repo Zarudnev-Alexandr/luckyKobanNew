@@ -2,9 +2,7 @@ import React, { useState, useContext, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { API_URL } from '../config/config';
 import Layout from '../components/Layout';
-import Cookies from 'js-cookie';
-import AuthContext from '../context/context';
-
+import { userContext } from '../context/context';
 const Login = () => {
   //let { LoginUser } = useContext(AuthContext);
   const [authData, setAuthData] = useState({});
@@ -17,13 +15,6 @@ const Login = () => {
     e.preventDefault();
     setAuthData({ ...authData, [e.target.name]: e.target.value });
   };
-
-  // const postAuthLogin = () => {
-  //   const login = authData.login;
-  //   const password = authData.password;
-  //   LoginUser(login, password);
-  //   reset();
-  // };
 
   const postAuthReg = async () => {
     let response = await fetch(API_URL + 'user/reg', {
@@ -51,7 +42,7 @@ const Login = () => {
         accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
+      //credentials: 'include',
       body: JSON.stringify({
         ...authData,
       }),
@@ -59,10 +50,14 @@ const Login = () => {
     let data = await response.json();
     if (response.status === 200) {
       alert('Успешный вход');
+      localStorage.setItem('token', data.token);
+      setToken(data.token);
     } else {
       alert('Вышел и зашел обратно');
     }
   };
+
+  const { token, setToken } = useContext(userContext);
 
   return (
     <>

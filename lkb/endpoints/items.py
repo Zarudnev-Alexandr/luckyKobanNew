@@ -7,7 +7,7 @@ from core.database import SessionLocal
 from core import crud
 from core import schemas
 
-router = APIRouter()
+router = APIRouter(tags=["Items"])
 
 
 def get_db():

@@ -8,7 +8,7 @@ from core import crud, payment
 from core import schemas
 from core.jwt_funcs import get_info_token
 
-router = APIRouter()
+router = APIRouter(tags=["Buying"])
 
 
 def get_db():

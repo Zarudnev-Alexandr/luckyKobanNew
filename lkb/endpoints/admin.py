@@ -12,7 +12,7 @@ from core import schemas
 
 from configs import admin_info, true_admin_token
 
-router = APIRouter()
+router = APIRouter(tags=["Admin"])
 
 
 def get_db():

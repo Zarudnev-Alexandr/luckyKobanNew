@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Cookie, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from fastapi import Response
 from typing import List
 
@@ -29,15 +29,15 @@ async def get_current_user(db: Session = Depends(get_db), user_id: str = Depends
     return crud.get_user(db, user_id)
 
 
-@router.post('/reg', response_model=schemas.BaseResponse, description="Registration", tags=["Auth Methods"])
-async def reg_user(response: Response, user_data: schemas.UserCreate, db: Session = Depends(get_db)):
+@router.post('/reg', response_model=schemas.AuthResponse, description="Registration", tags=["Auth Methods"],
+             status_code=201)
+async def reg_user(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
     if not email_validate.validate(user_data.email, check_smtp=False):
         raise HTTPException(400, "invalid email")
     if crud.check_email(db, user_data.email):
         raise HTTPException(400, "this email is already taken")
     token = crud.add_user(db, user_data)
-    response.set_cookie(key="token", value=token, httponly=True)
-    return schemas.BaseResponse(status=True, msg="reg is successful")
+    return schemas.AuthResponse(status=True, msg="reg is successful", token=token)
 
 
 @router.post('/activate', response_model=schemas.BaseResponse, tags=["Auth Methods"])
@@ -52,8 +52,7 @@ async def send_code(db: Session = Depends(get_db), user_id: str = Depends(get_in
     return schemas.BaseResponse(status=True, msg="code has been sent")
 
 
-@router.post('/login', response_model=schemas.BaseResponse, tags=["Auth Methods"])
-async def sign_user(response: Response, user_data: schemas.UserCreate, db: Session = Depends(get_db)):
+@router.post('/login', response_model=schemas.AuthResponse, tags=["Auth Methods"])
+async def sign_user(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
     token = crud.sign_user(db, user_data)
-    response.set_cookie(key="token", value=token)
-    return schemas.BaseResponse(status=True, msg="login is sucessful")
+    return schemas.AuthResponse(status=True, msg="reg is successful", token=token)

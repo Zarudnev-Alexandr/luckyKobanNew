@@ -71,3 +71,4 @@ class AuthResponse(BaseModel):
 class BaseResponse(BaseModel):
     status: str
     msg: str
+
