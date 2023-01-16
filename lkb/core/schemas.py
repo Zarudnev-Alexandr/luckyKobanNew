@@ -30,6 +30,7 @@ class UserInfo(BaseModel):
     email: str
     balance: int
     is_activate: bool
+    cases_count: int
 
     class Config:
         orm_mode = True
