@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import './styles/styles.scss';
+import { UserContext } from './context/context';
+import { useState, useMemo } from 'react';
 
 const App = () => {
   return (

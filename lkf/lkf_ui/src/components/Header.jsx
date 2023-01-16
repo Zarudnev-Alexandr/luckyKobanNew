@@ -9,9 +9,9 @@ const Header = () => {
         <div className='container'>
           <div className='header__inner'>
             <div className='header__logo-box'>
-              <a className='header__logo-box__link' href='/'>
+              <NavLink className='header__logo-box__link' to='/'>
                 <img src={Logo} alt='logo' className='header__logo-img' />
-              </a>
+              </NavLink>
             </div>
             <div className='header__links-box'>
               <ul className='header__links-list'>
@@ -33,9 +33,9 @@ const Header = () => {
               </ul>
             </div>
             <div className='header__auth-box'>
-              <a href='/login' className='header__auth-link'>
+              <NavLink to='/login' className='header__auth-link'>
                 Вход
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>

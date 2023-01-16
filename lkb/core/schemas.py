@@ -28,7 +28,8 @@ class Email(BaseModel):
 
 class UserInfo(BaseModel):
     email: str
-    balance: str
+    balance: int
+    is_activate: bool
 
     class Config:
         orm_mode = True
