@@ -7,13 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI(docs_url="/api", redoc_url="/api/redoc", openapi_url="/api/openapi.json")
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_headers=["*"],
-#     allow_methods=['POST', 'GET'],
-#     allow_credentials=True,
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_headers=["*"],
+    allow_methods=['POST', 'GET'],
+    allow_credentials=True,
+)
 
 app.include_router(users.router, prefix="/api/user")
 app.include_router(items.router, prefix="/api")
