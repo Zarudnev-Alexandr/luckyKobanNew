@@ -1,2 +1,2 @@
 # luckyKobanNew
-best case market
+Это ветка лучшего бэкэнд разработчика
