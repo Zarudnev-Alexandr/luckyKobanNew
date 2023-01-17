@@ -32,8 +32,9 @@ async def get_current_user(db: Session = Depends(get_db), user_id: str = Depends
 @router.post('/reg', response_model=schemas.AuthResponse, description="Registration", tags=["Auth Methods"],
              status_code=201)
 async def reg_user(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
-    if not email_validate.validate(user_data.email, check_smtp=False) or "@yandex.ru" not in user_data.email:
-        raise HTTPException(400, "invalid email")
+    if not email_validate.validate(user_data.email, check_smtp=False):
+        if "@yandex.ru" not in user_data.email:
+            raise HTTPException(400, "invalid email")
     if crud.check_email(db, user_data.email):
         raise HTTPException(400, "this email is already taken")
     token = crud.add_user(db, user_data)
