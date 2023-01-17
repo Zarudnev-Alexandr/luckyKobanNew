@@ -25,9 +25,10 @@ async def get_url_for_buy(case_id, db: Session = Depends(get_db), user_id: str =
     return schemas.PayUrl(url=payment.gen_pay(user_id, case))
 
 
-@router.post('/buy/successful_pay', status_code=200)
+@router.post('/buy/successful_pay', status_code=200, include_in_schema=False)
 async def give_case(req: Request, db: Session = Depends(get_db)):
     data = await req.json()
     buy_data: schemas.BuyData = schemas.BuyData(user_id=data["object"]["metadata"]["user_id"],
                                                 case_id=data["object"]["metadata"]["case_id"])
     crud.add_case_to_user(buy_data, db)
+

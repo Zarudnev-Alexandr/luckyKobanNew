@@ -1,7 +1,8 @@
 .login{
-  padding-bottom: calc(100vh - 140px - 40px - 250px - 109px - 25px);
+  //padding-bottom: calc(100vh - 140px - 40px - 250px - 109px - 25px);
+  height: calc(100vh - 110px);
   &__changetab-box{
-    margin-top: 140px;
+    padding-top: 140px;
     display: flex;
     justify-content: center; 
   }  

@@ -1,8 +1,11 @@
 import Logo from '../images/logo.png';
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { userContext } from '../context/context';
 
 const Header = () => {
+  const { token, setToken } = useContext(userContext);
+
   return (
     <>
       <div className='header'>
@@ -33,9 +36,25 @@ const Header = () => {
               </ul>
             </div>
             <div className='header__auth-box'>
-              <NavLink to='/login' className='header__auth-link'>
-                Вход
-              </NavLink>
+              {token ? (
+                <>
+                  <NavLink className='header__auth-link' to='/lk'>
+                    Личный кабинет
+                  </NavLink>
+                  <NavLink
+                    className='header__auth-link'
+                    onClick={() => (
+                      setToken(null), localStorage.setItem('token', null)
+                    )}
+                  >
+                    Выход
+                  </NavLink>
+                </>
+              ) : (
+                <NavLink to='/login' className='header__auth-link'>
+                  Вход
+                </NavLink>
+              )}
             </div>
           </div>
         </div>

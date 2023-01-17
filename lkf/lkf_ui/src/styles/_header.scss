@@ -18,5 +18,9 @@
   }
   &__auth-link{
     font-size: 20px;
+    & + &{
+      margin-left: 30px;
+    }
   }
+  
 }
