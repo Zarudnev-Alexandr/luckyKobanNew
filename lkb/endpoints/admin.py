@@ -28,11 +28,10 @@ def check_admin_token(token):
         raise HTTPException(401, "invalid token")
 
 
-@router.post('/login', response_model=schemas.BaseResponse, tags=["Auth Methods"])
-async def login_admin(response: Response, user_data: schemas.UserCreate):
+@router.post('/login', response_model=schemas.AuthResponse, tags=["Auth Methods"])
+async def login_admin(user_data: schemas.UserCreate):
     if user_data == admin_info:
-        response.set_cookie(key="admin_token", value=true_admin_token)
-        return schemas.BaseResponse(status=True, msg="login is sucessful")
+        return schemas.AuthResponse(status=True, msg="login is sucessful", token=true_admin_token)
     raise HTTPException(400, "invalid data")
 
 
