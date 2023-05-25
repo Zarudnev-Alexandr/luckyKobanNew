@@ -58,6 +58,9 @@ class Case(BaseModel):
 class PayUrl(BaseModel):
     url: str
 
+class BuyOut(BaseModel):
+    key: str
+    game_name: str
 
 class BuyData(BaseModel):
     user_id: int

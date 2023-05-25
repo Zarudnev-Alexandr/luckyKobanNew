@@ -8,6 +8,8 @@ from core import crud, payment
 from core import schemas
 from core.jwt_funcs import get_info_token
 
+from core import smtp
+
 router = APIRouter(tags=["Buying"])
 
 
@@ -19,10 +21,15 @@ def get_db():
         db.close()
 
 
-@router.get('/buy/{case_id}', response_model=schemas.PayUrl)
+@router.get('/buy/{case_id}', response_model=schemas.BuyOut)
 async def get_url_for_buy(case_id, db: Session = Depends(get_db), user_id: str = Depends(get_info_token)):
-    case = crud.get_case(case_id, db)
-    return schemas.PayUrl(url=payment.gen_pay(user_id, case))
+    buy_data: schemas.BuyData = schemas.BuyData(user_id=user_id,
+                                                case_id=case_id)
+    user = crud.get_user(db, user_id)
+    key = crud.add_case_to_user(buy_data, db)
+    game = crud.get_game(key.game_id, db)
+    smtp.send_key(key.code, user.email)
+    return schemas.BuyOut(game_name=game.name, key=key.code)
 
 
 @router.post('/buy/successful_pay', status_code=200, include_in_schema=False)

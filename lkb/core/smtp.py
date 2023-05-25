@@ -24,3 +24,20 @@ def send_code(code, email):
         raise err
     finally:
         smtp.quit()
+
+
+def send_key(key, email):
+    body = "\r\n".join((f"From: {smtp_user}", f"To: {email}",
+                        f"Subject: {subject}", mime, charset, "", "Ваш ключ {key}".format(key=key)))
+
+    try:
+        smtp = smtplib.SMTP(server, port)
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login(smtp_user, smtp_passwd)
+        smtp.sendmail(smtp_user, email, body.encode('utf-8'))
+    except smtplib.SMTPException as err:
+        print('SMTP Error', err)
+        raise err
+    finally:
+        smtp.quit()

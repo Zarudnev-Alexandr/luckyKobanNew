@@ -63,14 +63,22 @@ def get_case(case_id, db: Session):
     return case
 
 
+def get_game(game_id, db: Session):
+    game = db.query(models.Games).filter(models.Games.id == game_id).first()
+    if game is None:
+        raise HTTPException(400, "invalid game id")
+    return game
+
+
 def add_case_to_user(buy_data: schemas.BuyData, db: Session):
     game_id = db.query(models.CaseGame.game_id).filter(models.CaseGame.case_id == buy_data.case_id).order_by(
-        func.random()).first()
-    key_id = db.query(models.Keys.game_id).filter(models.Keys.game_id == game_id, models.Keys.is_buy is False).first()
-    db.query(models.Keys).filter(models.Keys.id == key_id).update({"is_buy": True, "user_id": buy_data.user_id})
-    purchase = models.Purchases(user_id=buy_data.user_id, case_id=buy_data.case_id, key_id=key_id, is_open=False)
+        func.random()).first()[0]
+    key = db.query(models.Keys).filter(models.Keys.game_id == game_id).first()
+    db.query(models.Keys).filter(models.Keys.id == key.id).update({"is_buy": True})
+    purchase = models.Purchases(user_id=buy_data.user_id, case_id=buy_data.case_id, key_id=key.id, is_open=False)
     db.add(purchase)
     db.commit()
+    return key
 
 
 def gen_code():
